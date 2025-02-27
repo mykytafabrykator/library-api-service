@@ -47,6 +47,7 @@ INSTALLED_APPS = [
     "debug_toolbar",
     "rest_framework",
     "books",
+    "users",
 ]
 
 MIDDLEWARE = [
@@ -80,6 +81,8 @@ TEMPLATES = [
 
 WSGI_APPLICATION = "library.wsgi.application"
 
+
+AUTH_USER_MODEL = "users.User"
 
 # Database
 # https://docs.djangoproject.com/en/5.1/ref/settings/#databases
