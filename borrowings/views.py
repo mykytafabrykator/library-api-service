@@ -9,7 +9,8 @@ from borrowings.models import Borrowing
 from borrowings.serializers import (
     BorrowingListSerializer,
     BorrowingRetrieveSerializer,
-    BorrowingCreateSerializer
+    BorrowingCreateSerializer,
+    BorrowingReturnSerializer
 )
 
 
@@ -45,6 +46,8 @@ class BorrowingsViewSet(
             return BorrowingRetrieveSerializer
         if self.action == "borrow_book":
             return BorrowingCreateSerializer
+        if self.action == "return_book":
+            return BorrowingReturnSerializer
 
         return BorrowingListSerializer
 
@@ -54,15 +57,28 @@ class BorrowingsViewSet(
             data=request.data,
             context={"request": request}
         )
+        serializer.is_valid(raise_exception=True)
 
-        if serializer.is_valid():
-            with transaction.atomic():
-                book = serializer.validated_data["book"]
-                book.inventory -= 1
-                book.save(update_fields=["inventory"])
+        with transaction.atomic():
+            serializer.save(user=request.user)
 
-                serializer.save(user=request.user)
+        return Response(serializer.data, status=status.HTTP_201_CREATED)
 
-            return Response(serializer.data, status=status.HTTP_201_CREATED)
+    @action(detail=True, methods=["POST"], url_path="return")
+    def return_book(self, request, pk=None):
+        borrowing = self.get_object()
+        serializer = self.get_serializer(
+            borrowing,
+            data=request.data,
+            partial=True
+        )
 
-        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+        serializer.is_valid(raise_exception=True)
+
+        with transaction.atomic():
+            serializer.save()
+
+        return Response(
+            {"message": "Book successfully returned!"},
+            status=status.HTTP_200_OK
+        )
