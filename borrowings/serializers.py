@@ -55,6 +55,13 @@ class BorrowingCreateSerializer(serializers.ModelSerializer):
 
         return data
 
+    def create(self, validated_data):
+        book = validated_data["book"]
+        book.inventory -= 1
+        book.save(update_fields=["inventory"])
+
+        return Borrowing.objects.create(**validated_data)
+
 
 class BorrowingReturnSerializer(serializers.ModelSerializer):
     actual_return_date = serializers.DateField(required=False)
