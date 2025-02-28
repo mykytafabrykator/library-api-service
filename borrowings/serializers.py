@@ -21,15 +21,5 @@ class BorrowingListSerializer(serializers.ModelSerializer):
         )
 
 
-class BorrowingRetrieveSerializer(serializers.ModelSerializer):
+class BorrowingRetrieveSerializer(BorrowingListSerializer):
     book = BookSerializer(read_only=True)
-
-    class Meta:
-        model = Borrowing
-        fields = (
-            "id",
-            "book",
-            "borrow_date",
-            "expected_return_date",
-            "actual_return_date"
-        )
