@@ -18,13 +18,25 @@ class BorrowingsViewSet(
     mixins.RetrieveModelMixin,
     GenericViewSet
 ):
-    queryset = Borrowing.objects.all()
+    queryset = Borrowing.objects.select_related("book", "user")
     permission_classes = (IsAuthenticated,)
 
     def get_queryset(self):
         queryset = self.queryset
-        if self.action in ("list", "retrieve"):
-            queryset = queryset.select_related("book")
+
+        is_active = self.request.query_params.get("is_active")
+        user_id = self.request.query_params.get("user_id")
+
+        if is_active is not None:
+            queryset = queryset.filter(
+                actual_return_date__isnull=is_active.lower() == "true"
+            )
+
+        if self.request.user.is_staff:
+            if user_id:
+                return queryset.filter(user_id=user_id)
+
+            return queryset
 
         return queryset.filter(user=self.request.user)
 
