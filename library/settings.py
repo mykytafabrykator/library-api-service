@@ -49,6 +49,7 @@ INSTALLED_APPS = [
     "books",
     "users",
     "borrowings",
+    "django_celery_beat",
 ]
 
 MIDDLEWARE = [
@@ -153,7 +154,7 @@ SIMPLE_JWT = {
     "ROTATE_REFRESH_TOKENS": True
 }
 
-CELERY_BROKER_URL = os.getenv("REDIS_URL", "redis://localhost:6379")
+CELERY_BROKER_URL = os.getenv("REDIS_URL")
 CELERY_ACCEPT_CONTENT = ["json"]
 CELERY_TASK_SERIALIZER = "json"
 CELERY_TIMEZONE = "Europe/Kyiv"
