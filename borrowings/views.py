@@ -9,10 +9,8 @@ from borrowings.models import Borrowing
 from borrowings.serializers import (
     BorrowingListSerializer,
     BorrowingRetrieveSerializer,
-    BorrowingCreateSerializer,
     BorrowingReturnSerializer
 )
-from borrowings.utils import send_borrowing_notification
 
 
 class BorrowingsViewSet(
@@ -45,27 +43,10 @@ class BorrowingsViewSet(
     def get_serializer_class(self):
         if self.action == "retrieve":
             return BorrowingRetrieveSerializer
-        if self.action == "borrow_book":
-            return BorrowingCreateSerializer
         if self.action == "return_book":
             return BorrowingReturnSerializer
 
         return BorrowingListSerializer
-
-    @action(detail=False, methods=["POST"], url_path="borrow")
-    def borrow_book(self, request):
-        serializer = self.get_serializer(
-            data=request.data,
-            context={"request": request}
-        )
-        serializer.is_valid(raise_exception=True)
-
-        with transaction.atomic():
-            borrowing = serializer.save(user=request.user)
-
-        send_borrowing_notification(borrowing)
-
-        return Response(serializer.data, status=status.HTTP_201_CREATED)
 
     @action(detail=True, methods=["POST"], url_path="return")
     def return_book(self, request, pk=None):
