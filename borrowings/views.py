@@ -12,6 +12,7 @@ from borrowings.serializers import (
     BorrowingCreateSerializer,
     BorrowingReturnSerializer
 )
+from borrowings.utils import send_borrowing_notification
 
 
 class BorrowingsViewSet(
@@ -60,7 +61,9 @@ class BorrowingsViewSet(
         serializer.is_valid(raise_exception=True)
 
         with transaction.atomic():
-            serializer.save(user=request.user)
+            borrowing = serializer.save(user=request.user)
+
+        send_borrowing_notification(borrowing)
 
         return Response(serializer.data, status=status.HTTP_201_CREATED)
 
