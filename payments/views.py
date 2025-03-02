@@ -13,14 +13,18 @@ class PaymentViewSet(
     mixins.RetrieveModelMixin,
     GenericViewSet
 ):
-    queryset = Payment.objects.select_related("borrowing__user")
     permission_classes = [IsAuthenticated]
 
     def get_queryset(self):
-        if self.request.user.is_staff:
-            return self.queryset
+        queryset = Payment.objects.select_related(
+            "borrowing__book",
+            "borrowing__user"
+        )
 
-        return self.queryset.filter(borrowing__user=self.request.user)
+        if self.request.user.is_staff:
+            return queryset
+
+        return queryset.filter(borrowing__user=self.request.user)
 
     def get_serializer_class(self):
         if self.action == "retrieve":
