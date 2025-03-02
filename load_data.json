@@ -1,0 +1,206 @@
+[
+{
+  "model": "books.book",
+  "pk": 1,
+  "fields": {
+    "title": "The Pragmatic Programmer",
+    "author": "Andy Hunt",
+    "cover": "HARD",
+    "inventory": 10,
+    "daily_fee": "2.50"
+  }
+},
+{
+  "model": "books.book",
+  "pk": 2,
+  "fields": {
+    "title": "Clean Code",
+    "author": "Robert C. Martin",
+    "cover": "SOFT",
+    "inventory": 5,
+    "daily_fee": "3.00"
+  }
+},
+{
+  "model": "books.book",
+  "pk": 3,
+  "fields": {
+    "title": "Django for Beginners",
+    "author": "William S. Vincent",
+    "cover": "HARD",
+    "inventory": 7,
+    "daily_fee": "1.75"
+  }
+},
+{
+  "model": "books.book",
+  "pk": 4,
+  "fields": {
+    "title": "Python Crash Course",
+    "author": "Eric Matthes",
+    "cover": "SOFT",
+    "inventory": 8,
+    "daily_fee": "2.25"
+  }
+},
+{
+  "model": "books.book",
+  "pk": 5,
+  "fields": {
+    "title": "Effective Python",
+    "author": "Brett Slatkin",
+    "cover": "HARD",
+    "inventory": 6,
+    "daily_fee": "3.50"
+  }
+},
+{
+  "model": "users.user",
+  "pk": 1,
+  "fields": {
+    "password": "pbkdf2_sha256$870000$vbNswHE6k9OwlJdEd0xH9w$NcVS0hE4+bkVtTivD17VpLViyECxQoj/MrQMD4vDARc=",
+    "last_login": "2025-03-02T20:20:52.367Z",
+    "is_superuser": true,
+    "is_staff": true,
+    "is_active": true,
+    "date_joined": "2025-03-02T20:15:45.925Z",
+    "email": "admin@admin.com",
+    "first_name": "Admin",
+    "last_name": "User",
+    "groups": [],
+    "user_permissions": []
+  }
+},
+{
+  "model": "users.user",
+  "pk": 2,
+  "fields": {
+    "password": "pbkdf2_sha256$870000$J8oj2StBZiEEbxajAAuJ2q$+tUUVRwXwyobzh7xCNIssAWuVxVWBcgfc3Uz+cyUQaU=",
+    "last_login": null,
+    "is_superuser": false,
+    "is_staff": false,
+    "is_active": true,
+    "date_joined": "2025-03-02T20:28:13.590Z",
+    "email": "hello_world@mail.com",
+    "first_name": "World",
+    "last_name": "Hello",
+    "groups": [],
+    "user_permissions": []
+  }
+},
+{
+  "model": "payments.payment",
+  "pk": 1,
+  "fields": {
+    "status": "PENDING",
+    "type": "FINE",
+    "borrowing": 7,
+    "session_url": "https://fake-stripe-session.com/2403",
+    "session_id": "stripe_session_6969",
+    "money_to_pay": "33.00"
+  }
+},
+{
+  "model": "payments.payment",
+  "pk": 2,
+  "fields": {
+    "status": "PENDING",
+    "type": "FINE",
+    "borrowing": 8,
+    "session_url": "https://fake-stripe-session.com/7137",
+    "session_id": "stripe_session_4252",
+    "money_to_pay": "31.50"
+  }
+},
+{
+  "model": "payments.payment",
+  "pk": 3,
+  "fields": {
+    "status": "PAID",
+    "type": "FINE",
+    "borrowing": 9,
+    "session_url": "https://fake-stripe-session.com/9113",
+    "session_id": "stripe_session_3881",
+    "money_to_pay": "73.50"
+  }
+},
+{
+  "model": "payments.payment",
+  "pk": 4,
+  "fields": {
+    "status": "PENDING",
+    "type": "PAYMENT",
+    "borrowing": 10,
+    "session_url": "https://fake-stripe-session.com/2433",
+    "session_id": "stripe_session_2485",
+    "money_to_pay": "49.50"
+  }
+},
+{
+  "model": "payments.payment",
+  "pk": 5,
+  "fields": {
+    "status": "PENDING",
+    "type": "PAYMENT",
+    "borrowing": 11,
+    "session_url": "https://fake-stripe-session.com/3778",
+    "session_id": "stripe_session_2850",
+    "money_to_pay": "7.50"
+  }
+},
+{
+  "model": "borrowings.borrowing",
+  "pk": 7,
+  "fields": {
+    "borrow_date": "2025-02-24",
+    "expected_return_date": "2025-03-07",
+    "actual_return_date": null,
+    "book": 2,
+    "user": 1
+  }
+},
+{
+  "model": "borrowings.borrowing",
+  "pk": 8,
+  "fields": {
+    "borrow_date": "2025-02-26",
+    "expected_return_date": "2025-03-16",
+    "actual_return_date": null,
+    "book": 3,
+    "user": 1
+  }
+},
+{
+  "model": "borrowings.borrowing",
+  "pk": 9,
+  "fields": {
+    "borrow_date": "2025-02-23",
+    "expected_return_date": "2025-03-16",
+    "actual_return_date": null,
+    "book": 5,
+    "user": 1
+  }
+},
+{
+  "model": "borrowings.borrowing",
+  "pk": 10,
+  "fields": {
+    "borrow_date": "2025-02-21",
+    "expected_return_date": "2025-03-15",
+    "actual_return_date": null,
+    "book": 4,
+    "user": 1
+  }
+},
+{
+  "model": "borrowings.borrowing",
+  "pk": 11,
+  "fields": {
+    "borrow_date": "2025-02-27",
+    "expected_return_date": "2025-03-16",
+    "actual_return_date": "2025-03-02",
+    "book": 1,
+    "user": 1
+  }
+}
+]

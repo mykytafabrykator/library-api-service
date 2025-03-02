@@ -18,12 +18,11 @@ class BorrowingsViewSet(
     mixins.RetrieveModelMixin,
     GenericViewSet
 ):
-    queryset = (Borrowing.objects.select_related("book", "user")
-                .prefetch_related("payments"))
     permission_classes = (IsAuthenticated,)
 
     def get_queryset(self):
-        queryset = self.queryset
+        queryset = (Borrowing.objects.select_related("book", "user")
+                    .prefetch_related("payments"))
 
         is_active = self.request.query_params.get("is_active")
         user_id = self.request.query_params.get("user_id")

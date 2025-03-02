@@ -21,6 +21,8 @@ idna==3.10
 kombu==5.4.2
 mccabe==0.7.0
 prompt_toolkit==3.0.50
+psycopg==3.2.5
+psycopg-binary==3.2.5
 pycodestyle==2.12.1
 pyflakes==3.2.0
 PyJWT==2.9.0
