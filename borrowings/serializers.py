@@ -42,10 +42,15 @@ class BorrowingRetrieveSerializer(BorrowingListSerializer):
 
 class BorrowingCreateSerializer(serializers.ModelSerializer):
     book = BookSerializer(read_only=True)
+    payments = serializers.SlugRelatedField(
+        many=True,
+        read_only=True,
+        slug_field="session_url"
+    )
 
     class Meta:
         model = Borrowing
-        fields = ("id", "book", "borrow_date", "expected_return_date")
+        fields = ("id", "book", "borrow_date", "expected_return_date", "payments")
 
     def validate(self, data):
         book = self.context["book"]
