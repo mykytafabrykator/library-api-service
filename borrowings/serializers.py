@@ -3,6 +3,7 @@ from rest_framework import serializers
 
 from books.serializers import BookSerializer
 from borrowings.models import Borrowing
+from payments.utils import create_stripe_session
 
 
 class BorrowingListSerializer(serializers.ModelSerializer):
@@ -16,6 +17,11 @@ class BorrowingListSerializer(serializers.ModelSerializer):
         read_only=True,
         slug_field="email"
     )
+    payments = serializers.SlugRelatedField(
+        many=True,
+        read_only=True,
+        slug_field="session_url"
+    )
 
     class Meta:
         model = Borrowing
@@ -25,7 +31,8 @@ class BorrowingListSerializer(serializers.ModelSerializer):
             "borrow_date",
             "expected_return_date",
             "actual_return_date",
-            "user"
+            "user",
+            "payments"
         )
 
 
@@ -63,7 +70,11 @@ class BorrowingCreateSerializer(serializers.ModelSerializer):
         book.inventory -= 1
         book.save(update_fields=["inventory"])
 
-        return Borrowing.objects.create(**validated_data)
+        borrowing = Borrowing.objects.create(**validated_data)
+
+        create_stripe_session(borrowing)
+
+        return borrowing
 
 
 class BorrowingReturnSerializer(serializers.ModelSerializer):
