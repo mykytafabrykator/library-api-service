@@ -22,7 +22,7 @@ class PaymentListSerializer(serializers.ModelSerializer):
         )
 
 
-class PaymentDetailSerializer(serializers.ModelSerializer):
+class PaymentRetrieveSerializer(serializers.ModelSerializer):
     borrowing = BorrowingRetrieveSerializer(read_only=True)
     money_to_pay = serializers.DecimalField(
         max_digits=10, decimal_places=2, read_only=True
