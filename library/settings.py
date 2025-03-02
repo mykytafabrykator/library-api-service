@@ -14,6 +14,7 @@ from datetime import timedelta
 
 from dotenv import load_dotenv
 from pathlib import Path
+import stripe
 
 
 load_dotenv()
@@ -160,3 +161,5 @@ CELERY_ACCEPT_CONTENT = ["json"]
 CELERY_TASK_SERIALIZER = "json"
 CELERY_TIMEZONE = "Europe/Kyiv"
 CELERY_TASK_TRACK_STARTED = True
+
+stripe.api_key = os.getenv("STRIPE_API_KEY")
