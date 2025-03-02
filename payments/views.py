@@ -1,3 +1,29 @@
-from django.shortcuts import render
+from rest_framework.permissions import IsAuthenticated
+from rest_framework.viewsets import GenericViewSet, mixins
 
-# Create your views here.
+from payments.models import Payment
+from payments.serializers import (
+    PaymentRetrieveSerializer,
+    PaymentListSerializer
+)
+
+
+class PaymentViewSet(
+    mixins.ListModelMixin,
+    mixins.RetrieveModelMixin,
+    GenericViewSet
+):
+    queryset = Payment.objects.select_related("borrowing__user")
+    permission_classes = [IsAuthenticated]
+
+    def get_queryset(self):
+        if self.request.user.is_staff:
+            return self.queryset
+
+        return self.queryset.filter(borrowing__user=self.request.user)
+
+    def get_serializer_class(self):
+        if self.action == "retrieve":
+            return PaymentRetrieveSerializer
+
+        return PaymentListSerializer
