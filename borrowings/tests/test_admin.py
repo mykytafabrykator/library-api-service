@@ -26,7 +26,10 @@ class AdminBorrowingTests(APITestCase):
 
         self.user = create_sample_user(email="user@example.com")
         self.book = create_sample_book()
-        self.borrowing = create_sample_borrowing(user=self.user, book=self.book)
+        self.borrowing = create_sample_borrowing(
+            user=self.user,
+            book=self.book
+        )
 
     def test_admin_can_view_all_borrowings(self):
         """Test that an admin can see all borrowings"""
