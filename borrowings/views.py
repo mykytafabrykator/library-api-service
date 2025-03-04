@@ -99,3 +99,27 @@ class BorrowingsViewSet(
             {"message": "Book successfully returned!"},
             status=status.HTTP_200_OK
         )
+
+    @extend_schema(
+        parameters=[
+            OpenApiParameter(
+                name="is_active",
+                description="Filter borrowings by active status. "
+                            "Use `true` for active (not returned) borrowings, "
+                            "or `false` for returned borrowings.",
+                required=False,
+                type=bool
+            ),
+            OpenApiParameter(
+                name="user_id",
+                description=(
+                    "Filter borrowings by user ID (admin only). "
+                    "If omitted, returns all users' borrowings (for admins)."
+                ),
+                required=False,
+                type=int
+            ),
+        ]
+    )
+    def list(self, request, *args, **kwargs):
+        return super().list(request, *args, **kwargs)
