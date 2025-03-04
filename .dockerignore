@@ -1,0 +1,39 @@
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+# Virtual environment
+venv/
+env/
+*.venv
+*.env
+
+# Logs and temporary files
+logs/
+*.log
+*.out
+*.err
+
+# Django & Celery related files
+celerybeat-schedule*
+*.db
+*.sqlite3
+
+# Docker-related files
+.dockerignore
+Dockerfile
+docker-compose.yml
+
+# IDE and editor configs
+.vscode/
+.idea/
+*.iml
+*.sublime-project
+*.sublime-workspace
+
+# Python packaging
+build/
+dist/
+*.egg-info/
