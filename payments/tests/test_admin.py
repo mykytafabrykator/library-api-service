@@ -11,7 +11,10 @@ class AdminPaymentsTests(APITestCase):
 
     def setUp(self):
         self.client = APIClient()
-        self.admin = create_sample_user(email="admin@example.com", is_staff=True)
+        self.admin = create_sample_user(
+            email="admin@example.com",
+            is_staff=True
+        )
         self.client.force_authenticate(user=self.admin)
 
     def test_admin_can_list_all_payments(self):
