@@ -1,4 +1,9 @@
 from django.db import transaction
+from drf_spectacular.utils import (
+    extend_schema,
+    OpenApiResponse,
+    OpenApiParameter
+)
 from rest_framework import mixins, status
 from rest_framework.decorators import action
 from rest_framework.permissions import IsAuthenticated
@@ -48,6 +53,34 @@ class BorrowingsViewSet(
 
         return BorrowingListSerializer
 
+    @extend_schema(
+        description=(
+            "Marks the book as returned by setting the `actual_return_date`."
+        ),
+        request=BorrowingReturnSerializer,
+        responses={
+            200: OpenApiResponse(
+                response={"message": "Book successfully returned!"},
+                description="The book was successfully returned."
+            ),
+            400: OpenApiResponse(description="Validation error"),
+            403: OpenApiResponse(
+                description="Not authorized to return this book"
+            ),
+            404: OpenApiResponse(description="Borrowing not found"),
+        },
+        parameters=[
+            OpenApiParameter(
+                name="actual_return_date",
+                description=(
+                    "Optional. The date when the book was actually returned. "
+                    "If not provided, today's date will be used."
+                ),
+                required=False,
+                type=str,
+            )
+        ]
+    )
     @action(detail=True, methods=["POST"], url_path="return")
     def return_book(self, request, pk=None):
         borrowing = self.get_object()
